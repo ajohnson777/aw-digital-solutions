@@ -1,0 +1,20 @@
+---
+import Sheet from '../layouts/Sheet.astro';
+import Icon from '../components/Icon.astro';
+import { sheets } from '../data/site.js';
+---
+<Sheet title="Sheet not found" sheet={{ no: '404', title: 'Not found' }} noindex description="This page doesn't exist on the AW Digital Solutions site.">
+  <header class="page-head">
+    <div class="construction" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1 class="display">That sheet isn't in the set.</h1>
+      <p class="lead">The page may have moved, or the link has a typo. Here's everything that does exist.</p>
+    </div>
+  </header>
+  <section class="wrap foot-index" style="padding-bottom:var(--s-6);max-width:640px;margin-inline:auto" aria-label="All pages">
+    <ol role="list">
+      {sheets.map((s) => <li><a href={s.href}><span class="note">{s.no}</span><span>{s.title}</span></a></li>)}
+    </ol>
+    <p style="margin-top:var(--s-4)"><a class="btn btn--primary" href="/">Back to home <Icon name="arrow" /></a></p>
+  </section>
+</Sheet>

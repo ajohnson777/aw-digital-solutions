@@ -1,0 +1,86 @@
+---
+import Sheet from '../layouts/Sheet.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site.js';
+const needs = ['A new website', 'A redesign', 'Ongoing management', 'Not sure yet'];
+---
+<Sheet title="Contact" description="Start a website project with AW Digital Solutions. Tell Alex and Will about your business and what you need.">
+  <header class="page-head">
+    <div class="construction" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1 class="display">Start a project.</h1>
+      <p class="lead">A few lines is plenty. We'll reply by email with what happens next.</p>
+    </div>
+  </header>
+
+  <section class="wrap contact-grid" aria-label="Project inquiry" style="padding-bottom:var(--s-6)">
+    <div data-reveal>
+      <h2 class="h3">What happens next</h2>
+      <ol class="next-steps" role="list" style="margin-top:var(--s-2)">
+        <li>We read your message. Both of us.</li>
+        <li>We reply by email with one organised list of questions, so we can do the whole job without chasing you.</li>
+        <li>You answer what you know. Anything you skip, we handle with a sensible default.</li>
+      </ol>
+      <h2 class="h3" style="margin-top:var(--s-5)">Prefer email?</h2>
+      <p style="margin-top:0.5rem">
+        <a class="link" href={`mailto:${site.email}`}>{site.email}</a>
+        {site.emailIsPlaceholder && <span class="tag">Placeholder</span>}
+      </p>
+    </div>
+
+    <form class="form" data-inquiry data-connected={String(site.formIsConnected)} data-email={site.email}
+      action={site.formEndpoint} method="POST" data-reveal style="--i:1">
+      {!site.formIsConnected && (
+        <p class="setup-note" role="note">Setup note: this form isn't connected to an inbox yet, so messages won't be delivered. Until it is, please use email.</p>
+      )}
+
+      <div class="two">
+        <div class="field">
+          <label for="f-name">Your name</label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-error" />
+          <p class="error" id="f-name-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-error" />
+          <p class="error" id="f-email-error" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="field">
+          <label for="f-business">Business name <span class="hint">(optional)</span></label>
+          <input class="input" id="f-business" name="business" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="f-site">Current website <span class="hint">(if you have one)</span></label>
+          <input class="input" id="f-site" name="website" type="url" inputmode="url" placeholder="https://" autocomplete="url" />
+        </div>
+      </div>
+
+      <fieldset class="field">
+        <legend>What do you need?</legend>
+        <div class="choices">
+          {needs.map((n, i) => (
+            <label class="choice"><input type="radio" name="need" value={n} checked={i === 3} /><span>{n}</span></label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="f-message">Tell us about it</label>
+        <span class="hint" id="f-message-hint">What your business does, and what you want the website to do for it.</span>
+        <textarea class="input" id="f-message" name="message" required aria-describedby="f-message-hint f-message-error"></textarea>
+        <p class="error" id="f-message-error" aria-live="polite"></p>
+      </div>
+
+      <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <div class="actions">
+        <button class="btn btn--primary" type="submit">Send inquiry <Icon name="arrow" /></button>
+        <p class="hint" style="color:var(--graphite-2);font-size:0.9rem">We only use your details to reply. <a href="/privacy/">Privacy</a></p>
+      </div>
+      <p class="form-status" role="status" tabindex="-1"></p>
+    </form>
+  </section>
+</Sheet>

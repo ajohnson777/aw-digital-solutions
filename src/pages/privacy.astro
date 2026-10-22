@@ -1,0 +1,22 @@
+---
+import Sheet from '../layouts/Sheet.astro';
+import { site } from '../data/site.js';
+---
+<Sheet title="Privacy" sheet={{ no: 'A-05', title: 'Privacy' }} description="How AW Digital Solutions handles the details you send through this website.">
+  <header class="page-head">
+    <div class="wrap">
+      <h1 class="display">Privacy</h1>
+      <p class="setup-note" style="margin-top:var(--s-3);max-width:68ch">PLACEHOLDER: plain-language draft written for AW. Have it reviewed before launch, and update it if you add analytics or change the form provider.</p>
+    </div>
+  </header>
+  <section class="wrap legal prose" style="padding-bottom:var(--s-6)">
+    <h2>What we collect</h2>
+    <p>Only what you type into the contact form: your name, email, and anything else you choose to tell us, such as your business name, website and project details.</p>
+    <h2>Why</h2>
+    <p>To reply to your inquiry and, if we work together, to run your project. We don't sell your details or add you to a mailing list.</p>
+    <h2>Who handles it</h2>
+    <p>Form messages are delivered to our inbox through a form service (Formspree). This site does not use advertising or tracking cookies.</p>
+    <h2>Your choices</h2>
+    <p>Ask us to see, correct or delete what you've sent by emailing <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  </section>
+</Sheet>

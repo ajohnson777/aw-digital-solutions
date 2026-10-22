@@ -1,0 +1,62 @@
+---
+import Sheet from '../layouts/Sheet.astro';
+import Icon from '../components/Icon.astro';
+import { process } from '../data/site.js';
+const nevers = [
+  'Invent reviews, testimonials or star ratings',
+  'Make up awards, numbers or years in business',
+  'Publish prices you haven’t given us',
+  'Take photos from image search and put them on your site',
+  'Promise things your business can’t do, like online ordering you don’t offer',
+];
+---
+<Sheet title="Process" description="How a website project with AW Digital Solutions runs: one round of questions, then sitemap, words, design, build, review, handoff and ongoing management.">
+  <header class="page-head">
+    <div class="construction" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1 class="display">Ask once. Build it all the way through.</h1>
+      <p class="lead">Eight stages, in the order they happen. You answer one set of questions at the start. After that, you hear from us when there's something to see.</p>
+    </div>
+  </header>
+
+  <section class="wrap" aria-label="Stages" style="padding-bottom:var(--s-6)">
+    <ol class="stages" role="list">
+      {process.map((p, i) => (
+        <li class="stage" data-reveal>
+          <span class="n num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h2 class="h3"><span class="visually-hidden">Stage {i + 1}: </span>{p.title}</h2>
+          <p>{p.body}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="section" aria-labelledby="honest-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="rule" data-reveal="rule"></div>
+      <div class="honest">
+        <div data-reveal>
+          <h2 class="h2" id="honest-h">Honest by default.</h2>
+          <p class="lead" style="margin-top:var(--s-3)">Your website makes claims in your name, and customers act on them. So there are things we won't put on it, even if every other site in your trade does.</p>
+        </div>
+        <div data-reveal style="--i:1">
+          <h3 class="note" style="margin-bottom:0.75rem;color:var(--graphite-2)">We never</h3>
+          <ul class="never" role="list">
+            {nevers.map((n) => <li><Icon name="cross" /><span>{n}</span></li>)}
+          </ul>
+          <p class="prose" style="margin-top:var(--s-3)">If something's missing, like photos or details, we design around it honestly and tell you exactly what to add.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blueprint" aria-labelledby="start">
+    <div class="wrap">
+      <h2 id="start" class="display" data-reveal>Stage one starts with a message.</h2>
+      <p class="lead" data-reveal style="--i:1">Tell us a little about your business. We'll send back the one list of questions we need answered.</p>
+      <div class="actions" data-reveal style="--i:2">
+        <a class="btn btn--on-cobalt" href="/contact/">Start a project <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+</Sheet>

@@ -1,0 +1,64 @@
+---
+import Sheet from '../layouts/Sheet.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site.js';
+---
+<Sheet title="About" description="AW Digital Solutions is Alex and Will, two co-founders building and managing modern, fast, and accessible websites for all businesses.">
+  <header class="page-head">
+    <div class="construction" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1 class="display">A is for Alex. W is for Will.</h1>
+      <p class="lead">Two co-founders, one studio, and a mission short enough to hold ourselves to.</p>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="mission-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="spec" data-reveal>
+        <div class="spec-row" style="grid-template-columns:1fr">
+          <h2 id="mission-h" class="h2" style="max-width:24ch"><span class="visually-hidden">Our mission: </span>“{site.mission}”</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="people-h" style="padding-top:0">
+    <div class="wrap duo">
+      <figure class="monogram" data-draw>
+        <svg viewBox="0 0 520 360" role="img" aria-labelledby="mono2">
+          <title id="mono2">The AW mark drafted at large scale: one line forming both letters.</title>
+          <path class="blue" pathLength="1" d="M20 320H500M20 40H500M20 200H500M150 20V340M300 20V340" stroke-width="0.8" style="--d:0" />
+          <path class="ink" pathLength="1" d="M40 320L150 40L232 320L300 128L368 320L480 40" stroke-width="5" stroke-linejoin="miter" style="--d:200" />
+          <path class="cob" pathLength="1" d="M84 208H200" stroke-width="5" style="--d:1300" />
+          <text class="fade" x="40" y="346" style="--d:1500">ALEX</text>
+          <text class="fade" x="440" y="346" style="--d:1600">WILL</text>
+        </svg>
+      </figure>
+      <div>
+        <h2 id="people-h" class="h2" data-reveal>Small on purpose.</h2>
+        <div class="prose" data-reveal style="--i:1;margin-top:var(--s-3)">
+          <p>AW is the two of us. There's no account manager in between and no handoff to a team you never meet. The people you talk to are the people designing, building and looking after your site.</p>
+          <p>We started AW to build websites the way we think they should be built for every business: designed for how the business actually works, quick to load, and usable by everyone who visits.</p>
+        </div>
+        <div class="people">
+          {site.founders.map((f, i) => (
+            <div class="person" data-reveal style={`--i:${i + 2}`}>
+              <span class="letter" aria-hidden="true">{f.initial}</span>
+              <div><strong>{f.name}</strong><span>{f.role}</span></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blueprint" aria-labelledby="start">
+    <div class="wrap">
+      <h2 id="start" class="display" data-reveal>Talk to both of us.</h2>
+      <p class="lead" data-reveal style="--i:1">One message reaches Alex and Will.</p>
+      <div class="actions" data-reveal style="--i:2">
+        <a class="btn btn--on-cobalt" href="/contact/">Start a project <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+</Sheet>

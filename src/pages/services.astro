@@ -1,0 +1,45 @@
+---
+import Sheet from '../layouts/Sheet.astro';
+import Icon from '../components/Icon.astro';
+import { services } from '../data/site.js';
+---
+<Sheet title="Services" description="Website build, redesign and ongoing management from AW Digital Solutions. Modern, fast and accessible sites for every kind of business.">
+  <header class="page-head">
+    <div class="construction" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1 class="display">Build it. Redesign it. Look after it.</h1>
+      <p class="lead">Every project gets the same standards: modern, fast and accessible. What changes is where you're starting from.</p>
+    </div>
+  </header>
+
+  <div class="wrap" style="padding-bottom:var(--s-6)">
+    {services.map((s) => (
+      <section class="svc-detail" id={s.id} aria-labelledby={`${s.id}-h`}>
+        <div data-reveal>
+          <h2 class="h2" id={`${s.id}-h`}><span class="well well--lg well--raised"><Icon name={s.id} /></span>{s.title}</h2>
+          <p class="lead">{s.line}</p>
+          <p class="prose">{s.body}</p>
+        </div>
+        <div data-reveal style="--i:1">
+          <h3 class="note" style="margin-bottom:0.75rem;color:var(--graphite-2)">What's included</h3>
+          <ul class="checklist" role="list">
+            {s.includes.map((item) => (
+              <li><Icon name="check" /><span>{item}</span></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))}
+
+    <section class="svc-detail" aria-labelledby="unsure-h">
+      <h2 class="h2" id="unsure-h" data-reveal>Not sure which one you need?</h2>
+      <div data-reveal style="--i:1">
+        <p class="lead" style="color:var(--graphite)">That's normal. Tell us what you have now and what you want it to do, and we'll tell you what we'd recommend.</p>
+        <div class="actions" style="margin-top:var(--s-4)">
+          <a class="btn btn--primary" href="/contact/">Start a project <Icon name="arrow" /></a>
+          <a class="link" href="/process/">How a project runs <Icon name="arrow" /></a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Sheet>

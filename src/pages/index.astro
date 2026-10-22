@@ -1,0 +1,134 @@
+---
+import Sheet from '../layouts/Sheet.astro';
+import Elevation from '../components/Elevation.astro';
+import Icon from '../components/Icon.astro';
+import { site, standards, services, process } from '../data/site.js';
+const icons = { Modern: 'modern', Fast: 'fast', Accessible: 'accessible' };
+---
+<Sheet title="Home" description="AW Digital Solutions is Alex and Will: a two-person studio building and managing modern, fast, and accessible websites for all businesses.">
+
+  <section class="hero" aria-labelledby="mission">
+    <div class="construction" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <h1 id="mission" class="display">{site.mission}</h1>
+        <p class="lead">We're Alex and Will. We design your website, build it properly, and look after it once it's live.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="/contact/">Start a project <Icon name="arrow" /></a>
+          <a class="link" href="/process/">See how a project runs <Icon name="arrow" /></a>
+        </div>
+      </div>
+      <Elevation />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="standards">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="standards" class="h2" data-reveal>Three words in our mission. Each one is a standard we build to.</h2>
+        <p class="lead" data-reveal style="--i:1">Anyone can say modern, fast and accessible. Here's what each one means on a real site, and how this page measures up.</p>
+      </div>
+      <div class="spec">
+        {standards.map((s, i) => (
+          <div class="spec-row" data-reveal style={`--i:${i}`}>
+            <h3 class="spec-word">{s.word}</h3>
+            <p class="prose">{s.means}</p>
+            <p class="spec-here">
+              <span class="well"><Icon name={icons[s.word]} /></span>
+              <span>
+                {s.here === 'measure:weight' && <>This page weighs <strong class="num" data-measure="weight">very little</strong>, including its font, measured as it loaded for you.</>}
+                {s.here === 'measure:motion' && <>Your motion setting: <strong data-measure="motion">detected when the page runs</strong>. Text contrast here: <strong class="num" data-measure="contrast">AA or better</strong>.</>}
+                {!s.here.startsWith('measure:') && s.here}
+              </span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="what">
+    <div class="wrap">
+      <div class="rule" data-reveal="rule"></div>
+      <div class="sec-head">
+        <h2 id="what" class="h2" data-reveal>Building and managing. We don't hand over a site and disappear.</h2>
+        <p class="lead" data-reveal style="--i:1">Three ways to work with us, depending on where your website is today.</p>
+      </div>
+      <ul class="services" role="list">
+        {services.map((s, i) => (
+          <li class="service" data-reveal style={`--i:${i}`}>
+            <span class="well well--lg well--raised"><Icon name={s.id} /></span>
+            <h3 class="h3">{s.title}</h3>
+            <p>{s.line} {s.body.split('. ')[0]}.</p>
+            <a class="link" href={`/services/#${s.id}`}>Details<span class="visually-hidden"> about {s.title}</span> <Icon name="arrow" /></a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="how">
+    <div class="wrap">
+      <div class="rule" data-reveal="rule"></div>
+      <div class="sec-head">
+        <h2 id="how" class="h2" data-reveal>One round of questions. Then we build it all the way through.</h2>
+        <p class="lead" data-reveal style="--i:1">No drip of emails asking for one more thing. The order below is the order it happens in.</p>
+      </div>
+      <ol class="sequence sequence--h" role="list" data-reveal="line">
+        {process.map((p, i) => (
+          <li class="step" data-reveal style={`--i:${i}`}>
+            <span class="node" aria-hidden="true"></span>
+            <div>
+              <span class="note">Stage {i + 1}</span>
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p style="margin-top:var(--s-4)" data-reveal><a class="link" href="/process/">Every stage, explained <Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="who">
+    <div class="wrap duo">
+      <figure class="monogram" data-draw>
+        <svg viewBox="0 0 520 360" role="img" aria-labelledby="mono-title">
+          <title id="mono-title">The letters A and W drafted as one continuous line, the right leg of the A becoming the first stroke of the W.</title>
+          <path class="blue" pathLength="1" d="M20 320H500M20 40H500M20 200H500" stroke-width="0.8" style="--d:0" />
+          <path class="ink" pathLength="1" d="M40 320L150 40L232 320L300 128L368 320L480 40" stroke-width="5" stroke-linejoin="miter" style="--d:200" />
+          <path class="cob" pathLength="1" d="M84 208H200" stroke-width="5" style="--d:1300" />
+          <text class="fade" x="40" y="346" style="--d:1500">A · ALEX</text>
+          <text class="fade" x="400" y="346" style="--d:1600">W · WILL</text>
+          <text class="fade" x="196" y="30" style="--d:1700">SHARED STROKE</text>
+          <path class="cob fade" d="M190 46L196 60" stroke-width="0.8" style="--d:1700" />
+        </svg>
+      </figure>
+      <div>
+        <h2 id="who" class="h2" data-reveal>Two people. The same two from first call to every update.</h2>
+        <p class="lead" data-reveal style="--i:1">The A is Alex and the W is Will. When you work with AW, the people you talk to are the people designing, building and looking after your site.</p>
+        <p style="margin-top:var(--s-4);--i:2" data-reveal><a class="link" href="/about/">About us <Icon name="arrow" /></a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blueprint" aria-labelledby="start">
+    <svg class="bp-dim" viewBox="0 0 420 300" aria-hidden="true">
+      <rect x="10" y="20" width="300" height="200" stroke-width="1" />
+      <rect x="250" y="90" width="120" height="190" rx="12" stroke-width="1" />
+      <path d="M10 8V14M310 8V14M10 11H310" stroke-width="0.8" />
+      <path d="M384 90H392M384 280H392M388 90V280" stroke-width="0.8" />
+      <path d="M30 60H200M30 80H160" stroke-width="6" />
+      <text x="140" y="6">YOUR SITE</text>
+      <text x="396" y="190">PHONE</text>
+    </svg>
+    <div class="wrap">
+      <h2 id="start" class="display" data-reveal>Let's draw up your website.</h2>
+      <p class="lead" data-reveal style="--i:1">Tell us about your business and what you need. We'll reply by email with the questions we need answered and what happens next.</p>
+      <div class="actions" data-reveal style="--i:2">
+        <a class="btn btn--on-cobalt" href="/contact/">Start a project <Icon name="arrow" /></a>
+        <a class="link" href="/services/">Compare services <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+</Sheet>
