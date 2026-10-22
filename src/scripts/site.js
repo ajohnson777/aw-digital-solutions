@@ -112,6 +112,8 @@ if ('IntersectionObserver' in window && root.classList.contains('motion-ok')) {
     }
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   revealables.forEach((el) => io.observe(el));
+  // Failsafe: nothing stays hidden if an observer never reports.
+  setTimeout(() => revealables.forEach((el) => { if (!el.classList.contains('is-in')) { el.classList.add('is-in'); if (el.hasAttribute('data-draw')) draw(el); } }), 6000);
 } else {
   revealables.forEach((el) => el.classList.add('is-in'));
 }
@@ -137,6 +139,11 @@ function measure() {
     if (bytes > 0) out.weight = `${Math.max(1, Math.round(bytes / 1024))} KB`;
     if (nav.domContentLoadedEventEnd > 0) out.ready = `${Math.round(nav.domContentLoadedEventEnd)} ms`;
   }
+  const svg = document.querySelector('.elevation svg');
+  if (svg) {
+    const drawn = svg.getBoundingClientRect().width * (400 / 480);
+    if (drawn > 0) out.scale = '1 : ' + (1440 / drawn).toFixed(1) + ' against a 1440 px screen';
+  }
   out.motion = reduce() ? 'Reduced, as you asked' : 'Full';
   const cs = getComputedStyle(document.body);
   out.contrast = `${contrast(cs.color, cs.backgroundColor).toFixed(1)} : 1`;
@@ -149,6 +156,7 @@ if (document.querySelector('[data-measure]')) {
   if (document.readyState === 'complete') measure();
   else window.addEventListener('load', () => setTimeout(measure, 60));
   window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener?.('change', measure);
+  window.addEventListener('resize', () => { clearTimeout(measure.t); measure.t = setTimeout(measure, 150); });
 }
 
 /* ── Contact form ───────────────────────────────────────────── */

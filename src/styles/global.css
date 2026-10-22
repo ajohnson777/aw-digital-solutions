@@ -530,11 +530,11 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .motion-ok .site-head, .motion-ok main > :first-child { animation: page-in 900ms var(--ease-out) both; }
 .motion-ok .title-block { animation: tb-in 900ms 250ms var(--ease-out) both; }
 
-.motion-ok [data-reveal] { transition: opacity 800ms var(--ease-out), transform 900ms var(--ease-out), clip-path 1000ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms); }
+.motion-ok [data-reveal] { transition: opacity 800ms var(--ease-out), transform 900ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms); }
 .motion-ok [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(20px); }
-/* Headings are inked upward, as if lettered onto the sheet */
-.motion-ok :is(.h2, .display)[data-reveal]:not(.is-in) { opacity: 1; clip-path: inset(0 0 100% 0); transform: translateY(12px); }
-.motion-ok :is(.h2, .display)[data-reveal] { clip-path: inset(0 0 -0.2em 0); }
+/* Headings settle slowly, from lower down; transform and opacity only, so no reflow */
+.motion-ok :is(.h2, .display)[data-reveal] { transition: opacity 800ms var(--ease-out), transform 1200ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms); }
+.motion-ok :is(.h2, .display)[data-reveal]:not(.is-in) { opacity: 0; transform: translateY(0.45em); }
 /* Ruled rows are drawn in from the left, along their rule */
 .motion-ok :is(.spec-row, .service, .stage, .svc-detail > *)[data-reveal]:not(.is-in) { transform: translateX(-18px); }
 /* Content settles only after its section rule has drawn: sequenced in site.js */
