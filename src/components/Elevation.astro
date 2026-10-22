@@ -1,0 +1,79 @@
+---
+// Front elevation of a web page, drafted live. The numbered
+// callouts key into the readout below, which is measured in the
+// visitor's browser on this very page.
+---
+<figure class="elevation" data-draw>
+  <svg viewBox="0 0 480 400" role="img" aria-labelledby="elev-title">
+    <title id="elev-title">A technical drawing of a web page at desktop and phone sizes, with numbered callouts for page weight, load time, text contrast and motion.</title>
+
+    <!-- dimension: overall width -->
+    <g class="dim">
+      <path pathLength="1" d="M40 12V22M440 12V22M40 17H440" style="--d:900" />
+      <path pathLength="1" d="M18 30H28M18 360H28M23 30V360" style="--d:1000" />
+    </g>
+    <text class="fade" x="196" y="9" style="--d:1500">DESKTOP · 1440</text>
+    <text class="fade" x="6" y="200" transform="rotate(-90 12 200)" style="--d:1600">FIRST VIEW</text>
+
+    <!-- browser frame -->
+    <rect class="ink" pathLength="1" x="40" y="30" width="400" height="330" rx="6" stroke-width="1.5" style="--d:0" />
+    <path class="ink" pathLength="1" d="M40 56H440" stroke-width="1" style="--d:300" />
+    <g class="fade" style="--d:600">
+      <circle cx="54" cy="43" r="3" class="ink-2" />
+      <circle cx="65" cy="43" r="3" class="ink-2" />
+      <circle cx="76" cy="43" r="3" class="ink-2" />
+    </g>
+
+    <!-- page content -->
+    <path class="ink-2" pathLength="1" d="M60 80H128" stroke-width="5" stroke-linecap="square" style="--d:500" />
+    <rect class="ink-2" pathLength="1" x="380" y="72" width="40" height="16" rx="5" stroke-width="1" style="--d:600" />
+    <path class="ink" pathLength="1" d="M60 122H318" stroke-width="12" stroke-linecap="square" style="--d:700" />
+    <path class="ink" pathLength="1" d="M60 146H262" stroke-width="12" stroke-linecap="square" style="--d:820" />
+    <path class="ink-2" pathLength="1" d="M60 176H230M60 190H208M60 204H220" stroke-width="2" style="--d:950" />
+    <rect class="cob" pathLength="1" x="60" y="224" width="92" height="30" rx="8" stroke-width="1.5" style="--d:1100" />
+    <rect class="cob-fill fade" x="60" y="224" width="92" height="30" rx="8" style="--d:1700" />
+    <rect class="ink-2" pathLength="1" x="164" y="224" width="74" height="30" rx="8" stroke-width="1" style="--d:1180" />
+    <path class="ink-2" pathLength="1" d="M60 290H200M60 304H180M60 318H190M60 332H150" stroke-width="1.5" style="--d:1250" />
+
+    <!-- image void, drawn the architect's way -->
+    <rect class="blue" pathLength="1" x="258" y="176" width="162" height="160" stroke-width="1.2" style="--d:900" />
+    <path class="blue" pathLength="1" d="M258 176L420 336M420 176L258 336" stroke-width="1" style="--d:1150" />
+
+    <!-- phone, overlapping -->
+    <rect class="ink" pathLength="1" x="392" y="214" width="78" height="150" rx="10" stroke-width="1.5" style="--d:1300" fill="var(--vellum)" />
+    <path class="ink" pathLength="1" d="M402 240H446M402 252H436" stroke-width="5" stroke-linecap="square" style="--d:1500" />
+    <path class="ink-2" pathLength="1" d="M402 268H458M402 277H450M402 286H454" stroke-width="1.5" style="--d:1600" />
+    <rect class="cob" pathLength="1" x="402" y="300" width="44" height="16" rx="5" stroke-width="1.5" style="--d:1700" />
+    <rect class="ink-2" pathLength="1" x="402" y="336" width="58" height="18" rx="5" stroke-width="1" style="--d:1750" />
+    <g class="dim"><path pathLength="1" d="M392 378V388M470 378V388M392 383H470" style="--d:1800" /></g>
+    <text class="fade" x="420" y="398" style="--d:2000">390</text>
+
+    <!-- callouts -->
+    <g class="fade" style="--d:2000">
+      <path class="cob" d="M318 122L352 104" stroke-width="0.8" /><circle cx="360" cy="100" r="9" class="cob" stroke-width="1.2" fill="var(--vellum)" />
+      <text x="357" y="104" style="fill:var(--cobalt)">1</text>
+    </g>
+    <g class="fade" style="--d:2150">
+      <path class="cob" d="M152 239L188 270" stroke-width="0.8" /><circle cx="196" cy="276" r="9" class="cob" stroke-width="1.2" fill="var(--vellum)" />
+      <text x="193" y="280" style="fill:var(--cobalt)">2</text>
+    </g>
+    <g class="fade" style="--d:2300">
+      <path class="cob" d="M226 176L238 168" stroke-width="0.8" /><circle cx="246" cy="164" r="9" class="cob" stroke-width="1.2" fill="var(--vellum)" />
+      <text x="243" y="168" style="fill:var(--cobalt)">3</text>
+    </g>
+    <g class="fade" style="--d:2450">
+      <path class="cob" d="M446 308L466 196" stroke-width="0.8" /><circle cx="468" cy="186" r="9" class="cob" stroke-width="1.2" fill="var(--vellum)" />
+      <text x="465" y="190" style="fill:var(--cobalt)">4</text>
+    </g>
+  </svg>
+
+  <figcaption>
+    <dl class="readout">
+      <div><dt><span class="note k" aria-hidden="true">1</span><span class="note">Page weight</span></dt><dd class="num" data-measure="weight">Measured in your browser</dd></div>
+      <div><dt><span class="note k" aria-hidden="true">2</span><span class="note">Ready in</span></dt><dd class="num" data-measure="ready">—</dd></div>
+      <div><dt><span class="note k" aria-hidden="true">3</span><span class="note">Text contrast</span></dt><dd class="num" data-measure="contrast">—</dd></div>
+      <div><dt><span class="note k" aria-hidden="true">4</span><span class="note">Motion</span></dt><dd data-measure="motion">—</dd></div>
+    </dl>
+    <p class="readout-note">Measured just now, on this page, in your browser. Not a claim.</p>
+  </figcaption>
+</figure>

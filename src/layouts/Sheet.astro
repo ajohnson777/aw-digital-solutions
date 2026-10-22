@@ -1,0 +1,141 @@
+---
+import '../styles/global.css';
+import { site, sheets } from '../data/site.js';
+import Mark from '../components/Mark.astro';
+import Icon from '../components/Icon.astro';
+
+const { title, description, sheet = null, noindex = false } = Astro.props;
+const path = Astro.url.pathname;
+const current = sheets.find((s) => s.href === path) ?? sheet;
+const fullTitle = path === '/' ? `${site.name} — ${site.mission}` : `${title} · ${site.name}`;
+const canonical = new URL(path, site.domain).href;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <meta name="theme-color" content="#e4e5e1" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preload" href="/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={site.name} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL('/og.png', site.domain).href} />
+  <meta property="og:image:alt" content={`${site.name}: ${site.mission}`} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script is:inline>
+    (function () {
+      var d = document.documentElement;
+      d.classList.remove('no-js'); d.classList.add('js');
+      if (window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion-ok');
+      // If the reveal script never runs, show everything anyway.
+      window.setTimeout(function () { if (!window.__awReady) d.classList.remove('motion-ok'); }, 2500);
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="sheet-frame" aria-hidden="true"></div>
+
+  <header class="site-head">
+    <div class="wrap">
+      <a class="wordmark" href="/" aria-label={`${site.name}, home`}>
+        <Mark size={40} />
+        <span>{site.name}</span>
+      </a>
+      <a class="btn btn--small head-cta" href="/contact/">Start a project <Icon name="arrow" /></a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <slot />
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap foot-grid">
+      <div class="foot-meta">
+        <a class="wordmark" href="/"><Mark size={36} /><span>{site.name}</span></a>
+        <p style="margin-top:0.75rem;max-width:36ch">{site.mission}</p>
+      </div>
+      <nav class="foot-index" id="footer-index" aria-label="Sheet index">
+        <h2 class="note" style="margin-bottom:0.6rem;color:var(--graphite-2)">Sheet index</h2>
+        <ol role="list">
+          {sheets.map((s) => (
+            <li><a href={s.href} aria-current={s.href === path ? 'page' : undefined}><span class="note">{s.no}</span><span>{s.title}</span></a></li>
+          ))}
+        </ol>
+      </nav>
+      <div class="foot-meta">
+        <h2 class="note" style="color:var(--graphite-2)">Get in touch</h2>
+        <p>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          {site.emailIsPlaceholder && <span class="tag">Placeholder</span>}
+        </p>
+        <p><a href="/contact/">Project inquiry form</a></p>
+        <p style="margin-top:1rem">© {year} {site.name} · <a href="/privacy/">Privacy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Title block: current sheet + the drawing index toggle -->
+  <aside class="title-block" aria-label="Page and menu">
+    <div class="tb-firm" aria-hidden="true">
+      <span class="note" style="color:var(--graphite-2)">Drawn by</span>
+      <strong>A + W</strong>
+    </div>
+    <div class="tb-sheet">
+      <span class="note">Sheet {current?.no ?? '—'}</span>
+      <strong>{current?.title ?? title}</strong>
+    </div>
+    <a class="btn btn--primary btn--small tb-cta" href="/contact/">Start a project</a>
+    <a class="index-fallback" href="#footer-index">Menu</a>
+    <button class="index-toggle" type="button" aria-haspopup="dialog" aria-controls="drawing-index" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path class="bar" d="M4 7h16" /><path class="bar" d="M4 12h16" /><path class="bar" d="M4 17h16" />
+      </svg>
+      <span class="visually-hidden">Open menu</span>
+    </button>
+  </aside>
+
+  <dialog class="index" id="drawing-index" role="dialog" aria-modal="true" aria-label="Site menu">
+    <div class="index-grid" aria-hidden="true"></div>
+    <div class="index-inner">
+      <div class="index-top">
+        <a class="wordmark" href="/"><Mark size={40} accent="#c9d2ff" /><span>{site.name}</span></a>
+        <button class="index-close" type="button" aria-label="Close menu"><Icon name="close" /></button>
+      </div>
+      <nav aria-label="Main">
+        <ol class="index-list" role="list">
+          {sheets.map((s) => (
+            <li>
+              <a href={s.href} aria-current={s.href === path ? 'page' : undefined}>
+                <span class="note">{s.no}</span>
+                <span class="t">{s.title}</span>
+                <span class="p">{s.purpose}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <div class="index-foot">
+        <a class="btn btn--on-cobalt" href="/contact/">Start a project <Icon name="arrow" /></a>
+        <p>Or email <a href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    import '../scripts/site.js';
+  </script>
+</body>
+</html>
