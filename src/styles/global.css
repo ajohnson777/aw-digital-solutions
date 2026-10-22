@@ -37,7 +37,7 @@
 
   /* Type */
   --font: 'Archivo', ui-sans-serif, system-ui, sans-serif;
-  --fs-display: clamp(2.4rem, 1.1rem + 4.6vw, 4.9rem);
+  --fs-display: clamp(2.4rem, min(1.1rem + 4.6vw, 8.6vh), 4.9rem);
   --fs-h2: clamp(1.9rem, 1.2rem + 2.6vw, 3.4rem);
   --fs-h3: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem);
   --fs-body: 1.0625rem;
@@ -187,7 +187,8 @@ input, textarea { caret-color: var(--cobalt); }
 .tb-sheet { display: grid; line-height: 1.15; min-width: 0; margin-right: auto; }
 .tb-sheet .note { color: var(--graphite-2); }
 .tb-sheet strong { font-weight: 660; font-stretch: 108%; font-size: 1rem; white-space: nowrap; }
-.tb-cta { min-height: 44px; }
+.tb-cta { min-height: 44px; transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out), visibility 300ms; }
+.title-block.cta-hidden .tb-cta { opacity: 0; transform: translateY(8px); visibility: hidden; pointer-events: none; }
 .index-toggle, .index-close {
   display: inline-grid; place-items: center; gap: 0; width: 52px; height: 52px; padding: 0;
   border-radius: 16px; border: 1.5px solid transparent; background: var(--vellum);
@@ -200,7 +201,9 @@ input, textarea { caret-color: var(--cobalt); }
 .index-toggle .bar { transition: transform 360ms var(--ease-out); transform-origin: center; transform-box: fill-box; }
 .index-toggle:hover .bar:nth-child(1) { transform: translateX(-2px); }
 .index-toggle:hover .bar:nth-child(3) { transform: translateX(2px); }
-.index-label { font-size: 0.6875rem; }
+.index-toggle { width: 64px; height: 56px; gap: 2px; align-content: center; }
+.index-toggle svg { width: 22px; height: 18px; }
+.index-label { font-size: 0.6875rem; line-height: 1; }
 /* No JavaScript: the toggle is a plain link to the footer index. */
 .js .index-fallback { display: none; }
 .no-js .index-toggle { display: none; }
@@ -297,6 +300,10 @@ html.index-open { overflow: hidden; }
 @media (min-width: 1024px) { .hero-grid { grid-template-columns: 7fr 5fr; gap: var(--s-4); } }
 .hero .lead { margin-top: var(--s-3); }
 .hero .actions { margin-top: var(--s-4); }
+@media (min-width: 1024px) {
+  .hero .elevation svg { height: min(36vh, 400px); width: 100%; }
+  .hero .elevation { padding-bottom: 72px; }
+}
 
 /* The self-drawing elevation */
 .elevation { position: relative; }
@@ -309,6 +316,11 @@ html.index-open { overflow: hidden; }
 .elevation .dim { stroke: var(--graphite); fill: none; stroke-width: 0.75; }
 .elevation text { font-family: var(--font); font-stretch: 72%; font-weight: 650; font-size: 10px; letter-spacing: 0.06em; fill: var(--graphite-2); }
 
+.scale { display: flex; align-items: center; gap: 0.75rem; margin-top: var(--s-2); color: var(--graphite-2); }
+.scale-bar { display: grid; grid-template-columns: repeat(4, 1fr); width: 168px; height: 14px; padding: 3px; border-radius: 8px; background: var(--vellum); box-shadow: var(--raise-sm); }
+.scale-bar i { display: block; border: 1px solid var(--graphite); }
+.scale-bar i:nth-child(odd) { background: var(--graphite); }
+.scale-bar i + i { border-left: 0; }
 .readout { margin-top: var(--s-3); display: grid; gap: 0; border-top: 1px solid var(--graphite); }
 .readout div { display: grid; grid-template-columns: 1.6rem 1fr auto; gap: 0.75rem; align-items: baseline; padding: 0.55rem 0; border-bottom: 1px solid var(--rule); }
 .readout dt { display: contents; color: var(--graphite-2); }
@@ -376,6 +388,7 @@ html.index-open { overflow: hidden; }
 /* ── Founders ──────────────────────────────────────────────── */
 .duo { display: grid; gap: var(--s-5); align-items: center; }
 @media (min-width: 900px) { .duo { grid-template-columns: 5fr 6fr; } }
+.duo .lead { margin-top: var(--s-3); }
 .monogram svg { width: min(100%, 520px); height: auto; }
 .monogram .ink { stroke: var(--graphite); fill: none; }
 .monogram .blue { stroke: var(--blueline); fill: none; }
@@ -464,13 +477,13 @@ html.index-open { overflow: hidden; }
 .field label, .field legend { font-weight: 640; font-stretch: 104%; }
 .field .hint { color: var(--graphite-2); font-size: 0.9rem; font-weight: 400; }
 .input {
-  width: 100%; min-height: 54px; padding: 0.85rem 1rem; border-radius: 14px; border: 1.5px solid transparent;
+  width: 100%; min-height: 54px; padding: 0.85rem 1rem; border-radius: 14px; border: 1px solid #767a72;
   background: var(--vellum); box-shadow: var(--inset); outline: none;
   transition: border-color 200ms, box-shadow 260ms var(--ease-out);
 }
 textarea.input { min-height: 160px; resize: vertical; line-height: 1.5; }
 .input::placeholder { color: #5d6168; }
-.input:hover { border-color: var(--rule); }
+.input:hover { border-color: var(--graphite); }
 .input:focus-visible, .input:focus { border-color: var(--cobalt); box-shadow: var(--inset), 0 0 0 3px rgba(35, 53, 200, 0.18); }
 .input[aria-invalid='true'] { border-color: var(--error); }
 .error { color: var(--error); font-weight: 600; font-size: 0.93rem; display: flex; gap: 0.4rem; align-items: center; }
@@ -517,8 +530,14 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .motion-ok .site-head, .motion-ok main > :first-child { animation: page-in 900ms var(--ease-out) both; }
 .motion-ok .title-block { animation: tb-in 900ms 250ms var(--ease-out) both; }
 
-.motion-ok [data-reveal] { transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out), filter 900ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms); }
-.motion-ok [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(28px); filter: blur(6px); }
+.motion-ok [data-reveal] { transition: opacity 800ms var(--ease-out), transform 900ms var(--ease-out), clip-path 1000ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms); }
+.motion-ok [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(20px); }
+/* Headings are inked upward, as if lettered onto the sheet */
+.motion-ok :is(.h2, .display)[data-reveal]:not(.is-in) { opacity: 1; clip-path: inset(0 0 100% 0); transform: translateY(12px); }
+.motion-ok :is(.h2, .display)[data-reveal] { clip-path: inset(0 0 -0.2em 0); }
+/* Ruled rows are drawn in from the left, along their rule */
+.motion-ok :is(.spec-row, .service, .stage, .svc-detail > *)[data-reveal]:not(.is-in) { transform: translateX(-18px); }
+/* Content settles only after its section rule has drawn: sequenced in site.js */
 .motion-ok [data-reveal='rule'] { transition: transform 1200ms var(--ease-in-out); }
 .motion-ok [data-reveal='rule']:not(.is-in) { opacity: 1; filter: none; transform: scaleX(0); }
 .motion-ok [data-reveal='line']:not(.is-in) { opacity: 1; transform: none; filter: none; --draw: 0; }

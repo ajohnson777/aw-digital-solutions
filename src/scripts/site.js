@@ -91,11 +91,24 @@ function draw(fig) {
   });
   fig.classList.add('drawn');
 }
+// A section's content settles only once its rule has finished drawing.
+const RULE_MS = 700;
+function reveal(el) {
+  const rule = el.dataset.reveal === 'rule' ? null : el.closest('.wrap')?.querySelector(':scope > .rule[data-reveal]');
+  if (el.dataset.reveal === 'rule') el.dataset.drawnAt = String(performance.now());
+  let wait = 0;
+  if (rule && rule.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) {
+    const at = Number(rule.dataset.drawnAt || 0);
+    wait = at ? Math.max(0, at + RULE_MS - performance.now()) : RULE_MS;
+  }
+  const go = () => { el.classList.add('is-in'); if (el.hasAttribute('data-draw')) draw(el); };
+  wait ? setTimeout(go, wait) : go();
+}
 const revealables = document.querySelectorAll('[data-reveal], [data-draw]');
 if ('IntersectionObserver' in window && root.classList.contains('motion-ok')) {
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
-      if (e.isIntersecting) { e.target.classList.add('is-in'); if (e.target.hasAttribute('data-draw')) draw(e.target); io.unobserve(e.target); }
+      if (e.isIntersecting) { io.unobserve(e.target); reveal(e.target); }
     }
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   revealables.forEach((el) => io.observe(el));
@@ -195,4 +208,11 @@ if (form) {
       status.focus();
     }
   });
+}
+
+/* ── Dock CTA: no duplicate while the hero's own button is on screen ── */
+const heroActions = document.querySelector('.hero .actions');
+const block = document.querySelector('.title-block');
+if (heroActions && block && 'IntersectionObserver' in window) {
+  new IntersectionObserver(([e]) => block.classList.toggle('cta-hidden', e.isIntersecting)).observe(heroActions);
 }
