@@ -3,3 +3,6 @@ dist/
 .verify/
 .astro/
 .impeccable/review/
+.env
+.env.local
+.vercel/
